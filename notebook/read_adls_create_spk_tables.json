@@ -1,0 +1,86 @@
+{
+	"name": "read_adls_create_spk_tables",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "aspoolforhrdata",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2
+		},
+		"metadata": {
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/e9aa988f-db1f-4fa2-bd6b-6a6853391c6d/resourceGroups/test-synapse/providers/Microsoft.Synapse/workspaces/testsynapsews01/bigDataPools/aspoolforhrdata",
+				"name": "aspoolforhrdata",
+				"type": "Spark",
+				"endpoint": "https://testsynapsews01.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/aspoolforhrdata",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "2.4",
+				"nodeCount": 3,
+				"cores": 4,
+				"memory": 28
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"source": [
+					"%%pyspark\r\n",
+					"data_path = spark.read.load('abfss://landingcontainer01@testadlssynapse.dfs.core.windows.net/userdata2.parquet', format='parquet')\r\n",
+					"data_path.show(100)"
+				],
+				"attachments": null,
+				"execution_count": 3
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"outputCollapsed": true,
+					"diagram": {
+						"activateDiagramType": 1,
+						"chartConfig": {
+							"category": "bar",
+							"keys": [],
+							"values": [],
+							"yLabel": "",
+							"xLabel": "",
+							"aggregation": "SUM",
+							"aggByBackend": false
+						},
+						"isSummary": false,
+						"previewData": {
+							"filter": null
+						},
+						"isSql": true
+					}
+				},
+				"source": [
+					"#%%sql\n",
+					"#create TABLE spk_tbl_adlsfiles using parquet \n",
+					"#location 'abfss://landingcontainer01@testadlssynapse.dfs.core.windows.net/userdata2.parquet'"
+				],
+				"execution_count": 5
+			},
+			{
+				"cell_type": "code",
+				"source": [
+					""
+				],
+				"execution_count": null
+			}
+		]
+	}
+}

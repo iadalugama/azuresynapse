@@ -1,0 +1,27 @@
+{
+	"name": "Database 1",
+	"properties": {
+		"Origin": {
+			"Type": "SPARK"
+		},
+		"Properties": {
+			"IsSyMSCDMDatabase": true,
+			"DerivedModelDBInfo": "{\"ModelDirectives\":{\"BaseModel\":{\"Name\":\"Retail\",\"Version\":\"0.1.0\"}}}",
+			"x-ms-usageinfo": "AzureSynapseDatabaseTemplate"
+		},
+		"Source": {
+			"Provider": "ADLS",
+			"Location": "abfss://landingcontainer01@testadlssynapse.dfs.core.windows.net/test123",
+			"Properties": {
+				"FormatType": "csv",
+				"LinkedServiceName": "testsynapsews01-WorkspaceDefaultStorage"
+			}
+		},
+		"PublishStatus": "PUBLISHED",
+		"ObjectVersion": 2,
+		"ObjectId": "812b6391-f6d3-455e-bbc0-94f214f49075",
+		"Name": "Database 1",
+		"EntityType": "DATABASE"
+	},
+	"type": "DATABASE"
+}

@@ -1,0 +1,16 @@
+{
+	"name": "SQL script 4",
+	"properties": {
+		"content": {
+			"query": "SELECT *\n FROM [default].[dbo].[spk_tbl_adlsfiles]",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"name": "default",
+				"type": "SqlOnDemand"
+			}
+		},
+		"type": "SqlQuery"
+	}
+}

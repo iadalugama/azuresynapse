@@ -1,0 +1,16 @@
+{
+	"name": "sqlreadpqfiles",
+	"properties": {
+		"content": {
+			"query": "-- Read multiple parquet files with same schema\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://testadlssynapse.dfs.core.windows.net/landingcontainer01/*.parquet',\n        FORMAT = 'Parquet'\n    ) AS [r]\nWHERE\n    r.filepath() in (\n        'https://testadlssynapse.dfs.core.windows.net/landingcontainer01/userdata2.parquet',\n\t\t'https://testadlssynapse.dfs.core.windows.net/landingcontainer01/userdata3.parquet',\n\t\t'https://testadlssynapse.dfs.core.windows.net/landingcontainer01/userdata4.parquet'\n    )\n\n\n    select * from vw_test_storagequery\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"name": "testondemalsql",
+				"type": "SqlOnDemand"
+			}
+		},
+		"type": "SqlQuery"
+	}
+}

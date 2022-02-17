@@ -1,0 +1,20 @@
+{
+	"name": "create_data_source",
+	"properties": {
+		"folder": {
+			"name": "serverless-test"
+		},
+		"content": {
+			"query": "-- create database Reporting\n\n-- create data souce / map ADLS, \n-- can map many Datalakes / floder to this logical DW \n\nCREATE EXTERNAL DATA SOURCE adlstestadlssynapse_serverless\nwith \n(\n    LOCATION = 'https://testadlssynapse.dfs.core.windows.net/landingcontainer01'\n);\n\n-- create external file format\n\nCREATE EXTERNAL FILE FORMAT sypase_parquet_file\nWITH\n(\n    FORMAT_TYPE= PARQUET\n);\n\n\n-- create schema\n\nCREATE SCHEMA  LDW AUTHORIZATION dbo;\nCREATE SCHEMA  STG AUTHORIZATION dbo;\n\n\nALTER DATABASE Reporting COLLATE latin1_general_100_bin2_utf8;\n\n\n-- after that you can create many views\nCREATE VIEW LDW.pharms_data as\nSELECT *\nFROM\n    OPENROWSET\n    (\n       -- BULK 'https://testadlssynapse.dfs.core.windows.net/landingcontainer01/pharms.csv',\n        BULK 'pharms.csv',        \n        FORMAT = 'CSV',\n        DATA_SOURCE='adlstestadlssynapse_serverless',\n        PARSER_VERSION='2.0'\n    ) AS [result]\n\n\n-- create external table , where we can witer back data to ADL as given file format\n-- parquet or delta etc..\n\nCREATE EXTERNAL TABLE STG.tbl_pharms\nWITH\n(\n    LOCATION = 'serverless_pool_output/tbl_pharms',\n    DATA_SOURCE = adlstestadlssynapse_serverless,\n    FILE_FORMAT = sypase_parquet_file\n)\nas \nSELECT * from LDW.pharms_data \n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "Reporting",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

@@ -1,0 +1,16 @@
+{
+	"name": "SQL script 3",
+	"properties": {
+		"content": {
+			"query": "-- type your sql script here, we now have intellisense\nCREATE TABLE tbl(\n    i_id int,u_name varchar(30)\n)",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"name": "testondemalsql",
+				"type": "SqlOnDemand"
+			}
+		},
+		"type": "SqlQuery"
+	}
+}

@@ -1,0 +1,27 @@
+{
+	"name": "retail_cdm",
+	"properties": {
+		"Description": "",
+		"Origin": {
+			"Type": "SPARK"
+		},
+		"Properties": {
+			"DerivedModelDBInfo": "{\"ModelDirectives\":{\"BaseModel\":{\"Name\":\"Retail\",\"Version\":\"0.1.0\"}}}",
+			"IsSyMSCDMDatabase": true
+		},
+		"Source": {
+			"Provider": "ADLS",
+			"Location": "abfss://landingcontainer01@testadlssynapse.dfs.core.windows.net/retail_cdm",
+			"Properties": {
+				"FormatType": "csv",
+				"LinkedServiceName": "testsynapsews01-WorkspaceDefaultStorage"
+			}
+		},
+		"PublishStatus": "PUBLISHED",
+		"ObjectVersion": 2,
+		"ObjectId": "336f0645-b762-42f4-a246-d1c307db17d8",
+		"Name": "retail_cdm",
+		"EntityType": "DATABASE"
+	},
+	"type": "DATABASE"
+}

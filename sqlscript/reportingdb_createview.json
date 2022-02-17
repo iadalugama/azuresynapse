@@ -1,0 +1,20 @@
+{
+	"name": "reportingdb_createview",
+	"properties": {
+		"folder": {
+			"name": "serverless-test"
+		},
+		"content": {
+			"query": "\nCREATE VIEW BankTransactions\nAS \n\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://testadlssynapse.dfs.core.windows.net/landingcontainer01/userdata1.parquet',\n        FORMAT='PARQUET'\n    ) AS [result]\n ",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "Reporting",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

@@ -1,0 +1,318 @@
+{
+	"name": "merge_datasets",
+	"properties": {
+		"folder": {
+			"name": "telco_sample"
+		},
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "telcoprocess",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "723c88f6-e786-4df8-909f-70dede0b107a"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"synapse_widget": {
+				"version": "0.1"
+			},
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/e9aa988f-db1f-4fa2-bd6b-6a6853391c6d/resourceGroups/test-synapse/providers/Microsoft.Synapse/workspaces/testsynapsews01/bigDataPools/telcoprocess",
+				"name": "telcoprocess",
+				"type": "Spark",
+				"endpoint": "https://testsynapsews01.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/telcoprocess",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "3.1",
+				"nodeCount": 10,
+				"cores": 4,
+				"memory": 28,
+				"extraHeader": null
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"source": [
+					"# Import required modules\r\n",
+					"from pyspark.sql import functions as f\r\n",
+					"from pyspark.sql.types import StructType, StructField, StringType, FloatType, IntegerType\r\n",
+					"from datetime import datetime\r\n",
+					"import base64\r\n",
+					"import json\r\n",
+					"import os"
+				],
+				"attachments": null,
+				"execution_count": 20
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"container_name = \"preprocessingcontainer01\"\r\n",
+					"storage_account_name = \"testadlssynapse\"\r\n",
+					"df_rogers = spark.read.format(\"csv\").options(header='true') \\\r\n",
+					"              .load(f\"abfss://{container_name}@{storage_account_name}.dfs.core.windows.net/Customers_Rogers.csv\") \\\r\n",
+					"              .withColumn(\"IsMatched\", f.lit(0))\r\n",
+					"\r\n",
+					"df_rogers.show()"
+				],
+				"attachments": null,
+				"execution_count": 9
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"df_shaw = spark.read.format(\"csv\").options(header='true') \\\r\n",
+					"          .load(f\"abfss://{container_name}@{storage_account_name}.dfs.core.windows.net/Customers_Shaw.csv\") \\\r\n",
+					"          .withColumn(\"IsMatched\", f.lit(0))\r\n",
+					"df_shaw.show()"
+				],
+				"attachments": null,
+				"execution_count": 10
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"columns = [f\"a.{col[0]}\" for col in df_shaw.dtypes]\r\n",
+					"df_matched = df_shaw.alias(\"a\").join(df_rogers.alias(\"b\"), [(df_shaw.ssn == df_rogers.SSN) & (df_shaw.birth_date == df_rogers.BirthDate)]) \\\r\n",
+					"                    .select(columns)\r\n",
+					"df_matched = df_matched.withColumn(\"IsMatched\", f.lit(1))\r\n",
+					"df_matched.show()"
+				],
+				"attachments": null,
+				"execution_count": 11
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"df_unique_shaw = df_shaw.subtract(df_matched)\r\n",
+					"df_unique_shaw.count()"
+				],
+				"attachments": null,
+				"execution_count": 12
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"\r\n",
+					"df_matched_updated = df_matched.withColumn(\"IsMatched\", f.lit(0))\r\n",
+					"df_unique_rogers = df_rogers.subtract(df_matched_updated)\r\n",
+					"df_unique_rogers.count()\r\n",
+					""
+				],
+				"attachments": null,
+				"execution_count": 13
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"\r\n",
+					"df_unique_shaw = df_unique_shaw \\\r\n",
+					"                    .withColumnRenamed(\"cust_id\", \"Id\") \\\r\n",
+					"                    .withColumnRenamed(\"first_name\", \"FirstName\") \\\r\n",
+					"                    .withColumnRenamed(\"last_name\", \"LastName\") \\\r\n",
+					"                    .withColumnRenamed(\"birth_date\", \"BirthDate\") \\\r\n",
+					"                    .withColumnRenamed(\"email\", \"Email\") \\\r\n",
+					"                    .withColumnRenamed(\"phone\", \"Phone\") \\\r\n",
+					"                    .withColumnRenamed(\"ssn\", \"SSN\") \\\r\n",
+					"                    .withColumnRenamed(\"address_line1\", \"AddressLine1\") \\\r\n",
+					"                    .withColumnRenamed(\"address_line2\", \"AddressLine2\") \\\r\n",
+					"                    .withColumnRenamed(\"city\", \"City\") \\\r\n",
+					"                    .withColumnRenamed(\"state\", \"State\") \\\r\n",
+					"                    .withColumnRenamed(\"pincode\", \"PinCode\")\r\n",
+					"\r\n",
+					"df_unique_shaw.printSchema()\r\n",
+					""
+				],
+				"attachments": null,
+				"execution_count": 14
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"\r\n",
+					"\r\n",
+					"df_merged = df_unique_rogers.union(df_unique_shaw).union(df_matched)\r\n",
+					"df_merged.show(50)\r\n",
+					""
+				],
+				"attachments": null,
+				"execution_count": 15
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"df_merged.registerTempTable(\"MergedCustomers\")\r\n",
+					"\r\n",
+					"df = spark.sql(\"select * from MergedCustomers\");\r\n",
+					"\r\n",
+					"df.show()"
+				],
+				"attachments": null,
+				"execution_count": 16
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": false
+				},
+				"source": [
+					"\r\n",
+					"%%sql\r\n",
+					"\r\n",
+					"SELECT IsMatched, count(*) as Count from MergedCustomers group by IsMatched\r\n",
+					""
+				],
+				"attachments": null,
+				"execution_count": 18
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"dw_connection_str = dbutils.secrets.get(scope=\"PoCKeyVaultScope\",key=\"SQLDWConnectionString\")\r\n",
+					"df_merged.write \\\r\n",
+					" .format(\"com.databricks.spark.sqldw\") \\\r\n",
+					" .mode(\"overwrite\") \\\r\n",
+					" .option(\"url\", dw_connection_str) \\\r\n",
+					" .option(\"useAzureMSI\", \"true\") \\\r\n",
+					" .option(\"dbTable\", \"test.Customers\") \\\r\n",
+					" .option(\"tempDir\", f\"abfss://{container_name}@{storage_account_name}.dfs.core.windows.net/staging\") \\\r\n",
+					" .save()"
+				],
+				"attachments": null,
+				"execution_count": 21
+			}
+		]
+	}
+}
