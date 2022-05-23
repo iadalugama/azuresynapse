@@ -20,14 +20,11 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "723c88f6-e786-4df8-909f-70dede0b107a"
+				"spark.autotune.trackingId": "d51345d4-9c6b-4da3-93ae-700fab17ed87"
 			}
 		},
 		"metadata": {
 			"saveOutput": true,
-			"synapse_widget": {
-				"version": "0.1"
-			},
 			"enableDebugMode": false,
 			"kernelspec": {
 				"name": "synapse_pyspark",
@@ -39,17 +36,10 @@
 			"a365ComputeOptions": {
 				"id": "/subscriptions/e9aa988f-db1f-4fa2-bd6b-6a6853391c6d/resourceGroups/test-synapse/providers/Microsoft.Synapse/workspaces/testsynapsews01/bigDataPools/telcoprocess",
 				"name": "telcoprocess",
-				"type": "Spark",
-				"endpoint": "https://testsynapsews01.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/telcoprocess",
 				"auth": {
 					"type": "AAD",
 					"authResource": "https://dev.azuresynapse.net"
-				},
-				"sparkVersion": "3.1",
-				"nodeCount": 10,
-				"cores": 4,
-				"memory": 28,
-				"extraHeader": null
+				}
 			},
 			"sessionKeepAliveTimeout": 30
 		},
@@ -65,7 +55,6 @@
 					"import json\r\n",
 					"import os"
 				],
-				"attachments": null,
 				"execution_count": 20
 			},
 			{
@@ -90,7 +79,6 @@
 					"\r\n",
 					"df_rogers.show()"
 				],
-				"attachments": null,
 				"execution_count": 9
 			},
 			{
@@ -112,7 +100,6 @@
 					"          .withColumn(\"IsMatched\", f.lit(0))\r\n",
 					"df_shaw.show()"
 				],
-				"attachments": null,
 				"execution_count": 10
 			},
 			{
@@ -135,7 +122,6 @@
 					"df_matched = df_matched.withColumn(\"IsMatched\", f.lit(1))\r\n",
 					"df_matched.show()"
 				],
-				"attachments": null,
 				"execution_count": 11
 			},
 			{
@@ -155,7 +141,6 @@
 					"df_unique_shaw = df_shaw.subtract(df_matched)\r\n",
 					"df_unique_shaw.count()"
 				],
-				"attachments": null,
 				"execution_count": 12
 			},
 			{
@@ -178,7 +163,6 @@
 					"df_unique_rogers.count()\r\n",
 					""
 				],
-				"attachments": null,
 				"execution_count": 13
 			},
 			{
@@ -213,7 +197,6 @@
 					"df_unique_shaw.printSchema()\r\n",
 					""
 				],
-				"attachments": null,
 				"execution_count": 14
 			},
 			{
@@ -236,7 +219,6 @@
 					"df_merged.show(50)\r\n",
 					""
 				],
-				"attachments": null,
 				"execution_count": 15
 			},
 			{
@@ -259,7 +241,6 @@
 					"\r\n",
 					"df.show()"
 				],
-				"attachments": null,
 				"execution_count": 16
 			},
 			{
@@ -274,6 +255,9 @@
 							"deleting": false
 						}
 					},
+					"microsoft": {
+						"language": "sparksql"
+					},
 					"collapsed": false
 				},
 				"source": [
@@ -283,7 +267,6 @@
 					"SELECT IsMatched, count(*) as Count from MergedCustomers group by IsMatched\r\n",
 					""
 				],
-				"attachments": null,
 				"execution_count": 18
 			},
 			{
@@ -310,8 +293,31 @@
 					" .option(\"tempDir\", f\"abfss://{container_name}@{storage_account_name}.dfs.core.windows.net/staging\") \\\r\n",
 					" .save()"
 				],
-				"attachments": null,
 				"execution_count": 21
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"# With this registered as a temp view, it will only be available to this particular notebook. If you'd like other users to be able to query this table, you can also create a table from the DataFrame.\r\n",
+					"# Once saved, this table will persist across cluster restarts as well as allow various users across different notebooks to query this data.\r\n",
+					"# To do so, choose your table name and uncomment the bottom line.\r\n",
+					"\r\n",
+					"permanent_table_name = \"result_csv\"\r\n",
+					"\r\n",
+					"df.write.format(\"delta\").saveAsTable(permanent_table_name)"
+				],
+				"execution_count": null
 			}
 		]
 	}
