@@ -1,5 +1,5 @@
 {
-	"name": "Pipeline 1",
+	"name": "p_copysqltosqldw",
 	"properties": {
 		"activities": [
 			{
@@ -18,6 +18,13 @@
 					"dataflow": {
 						"referenceName": "dfcopysqltosqldw",
 						"type": "DataFlowReference"
+					},
+					"staging": {
+						"linkedService": {
+							"referenceName": "test-synapse-ws-01-WorkspaceDefaultStorage",
+							"type": "LinkedServiceReference"
+						},
+						"folderPath": "staging-data"
 					},
 					"compute": {
 						"coreCount": 8,
