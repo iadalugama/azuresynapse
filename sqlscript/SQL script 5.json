@@ -2,13 +2,13 @@
 	"name": "SQL script 5",
 	"properties": {
 		"content": {
-			"query": "SELECT TOP (100) [CustomerId]\n,[ActivityId]\n,[Date]\n,[AioLevelId]\n,[CustomerActivityNote]\n FROM [Database 1].[dbo].[CustomerActivity]",
+			"query": " select * from sys.dm_pdw_exec_requests",
 			"metadata": {
 				"language": "sql"
 			},
 			"currentConnection": {
-				"databaseName": "Database 1",
-				"poolName": "Built-in"
+				"databaseName": "sampledw01",
+				"poolName": "sampledw01"
 			},
 			"resultLimit": 5000
 		},
