@@ -79,7 +79,7 @@
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> joinSQLandCSV",
+				"     broadcast: 'left')~> joinSQLandCSV",
 				"joinSQLandCSV sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
