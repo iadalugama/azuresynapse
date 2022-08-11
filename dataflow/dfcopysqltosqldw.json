@@ -87,12 +87,10 @@
 				"     updateable:false,",
 				"     upsertable:false,",
 				"     format: 'table',",
-				"     staged: true,",
-				"     allowCopyCommand: true,",
+				"     staged: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError',",
-				"     partitionBy('roundRobin', 2)) ~> AzureSynapesDW1"
+				"     errorHandlingOption: 'stopOnFirstError') ~> AzureSynapesDW1"
 			]
 		}
 	}
