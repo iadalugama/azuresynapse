@@ -1,5 +1,5 @@
 {
-	"name": "dfcopysqltosqldw",
+	"name": "df_copysqltosqldw",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {

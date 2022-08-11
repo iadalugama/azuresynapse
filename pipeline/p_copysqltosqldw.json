@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dfcopysqltosqldw",
+						"referenceName": "df_copysqltosqldw",
 						"type": "DataFlowReference"
 					},
 					"staging": {

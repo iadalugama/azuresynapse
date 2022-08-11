@@ -1,8 +1,8 @@
 {
-	"name": "SQL script 5",
+	"name": "sqlSelectQueries",
 	"properties": {
 		"content": {
-			"query": " select * from sys.dm_pdw_exec_requests",
+			"query": " select start_time,status,command from sys.dm_pdw_exec_requests \n  where command like '%copy%' or command like '%insert%' \n order by start_time desc\n \n --SELECT count(*) from dbo.customers",
 			"metadata": {
 				"language": "sql"
 			},
