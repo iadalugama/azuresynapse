@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Data flow1",
+				"name": "df_joinCSVandSQLDB_sink_DW",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -30,7 +30,11 @@
 						"coreCount": 8,
 						"computeType": "General"
 					},
-					"traceLevel": "Fine"
+					"traceLevel": "None",
+					"runConcurrently": true,
+					"cacheSinks": {
+						"firstRowOnly": true
+					}
 				}
 			}
 		],
