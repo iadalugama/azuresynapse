@@ -17,7 +17,15 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "df_copysqltosqldw",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"SalesLTCustomerCSV": {
+								"dir_path": {
+									"value": "@pipeline().parameters.dir_path",
+									"type": "Expression"
+								}
+							}
+						}
 					},
 					"staging": {
 						"linkedService": {
@@ -38,6 +46,11 @@
 				}
 			}
 		],
+		"parameters": {
+			"dir_path": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
