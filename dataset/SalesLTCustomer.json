@@ -5,21 +5,12 @@
 			"referenceName": "test-synapse-ws-01-WorkspaceDefaultStorage",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"dir_path": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": "SalesLT.Customer.txt",
-				"folderPath": {
-					"value": "@dataset().dir_path",
-					"type": "Expression"
-				},
 				"fileSystem": "row-data"
 			},
 			"columnDelimiter": ",",
