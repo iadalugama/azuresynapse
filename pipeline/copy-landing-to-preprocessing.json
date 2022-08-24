@@ -19,6 +19,12 @@
 						"referenceName": "DataflowCopyblobs",
 						"type": "DataFlowReference"
 					},
+					"staging": {
+						"linkedService": {
+							"referenceName": "test-synapse-ws-01-WorkspaceDefaultStorage",
+							"type": "LinkedServiceReference"
+						}
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
