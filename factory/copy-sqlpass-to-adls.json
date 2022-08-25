@@ -1,0 +1,9 @@
+{
+	"name": "copy-sqlpass-to-adls",
+	"location": "canadacentral",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "b4e215e5-ac2f-497f-b53f-74c5c3e05ac3",
+		"tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+	}
+}
