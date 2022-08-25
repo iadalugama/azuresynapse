@@ -6,10 +6,6 @@
 			"url": "https://testadls2synapsew01.dfs.core.windows.net"
 		},
 		"type": "AzureBlobFS",
-		"connectVia": {
-			"referenceName": "integrationRuntime1",
-			"type": "IntegrationRuntimeReference"
-		},
 		"annotations": []
 	}
 }
