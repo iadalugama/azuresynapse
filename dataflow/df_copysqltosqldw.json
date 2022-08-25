@@ -34,6 +34,9 @@
 				}
 			],
 			"scriptLines": [
+				"parameters{",
+				"     df_inside_dir_path as string",
+				"}",
 				"source(output(",
 				"          CustomerID as integer,",
 				"          NameStyle as boolean,",

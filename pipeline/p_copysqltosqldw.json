@@ -18,10 +18,13 @@
 					"dataflow": {
 						"referenceName": "df_copysqltosqldw",
 						"type": "DataFlowReference",
+						"parameters": {
+							"df_inside_dir_path": "\"/2022/04/07\""
+						},
 						"datasetParameters": {
 							"SalesLTCustomerCSV": {
-								"dir_path": {
-									"value": "@pipeline().parameters.dir_path",
+								"ds_dir_path": {
+									"value": "@pipeline().parameters.dpipeline_dir_path",
 									"type": "Expression"
 								}
 							}
@@ -47,7 +50,7 @@
 			}
 		],
 		"parameters": {
-			"dir_path": {
+			"dpipeline_dir_path": {
 				"type": "string"
 			}
 		},
