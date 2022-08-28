@@ -1,0 +1,9 @@
+{
+	"name": "azuresynapse-pipelines",
+	"location": "canadacentral",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "42b8f4e3-e0e1-4413-b602-68c88383ddad",
+		"tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+	}
+}
