@@ -30,9 +30,6 @@
 							}
 						}
 					},
-					"staging": {
-						"folderPath": "staging-data"
-					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
