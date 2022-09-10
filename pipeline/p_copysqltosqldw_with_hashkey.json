@@ -1,0 +1,55 @@
+{
+	"name": "p_copysqltosqldw_with_hashkey",
+	"properties": {
+		"activities": [
+			{
+				"name": "df_joinCSVandSQLDB_sink_DW",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "1.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "df_copysqltosqldw",
+						"type": "DataFlowReference",
+						"parameters": {
+							"df_inside_dir_path": "\"/2022/04/07\""
+						},
+						"datasetParameters": {
+							"SalesLTCustomerCSV": {
+								"ds_dir_path": {
+									"value": "@pipeline().parameters.dpipeline_dir_path",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					"staging": {
+						"folderPath": "staging-data"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "None",
+					"runConcurrently": true,
+					"cacheSinks": {
+						"firstRowOnly": true
+					}
+				}
+			}
+		],
+		"parameters": {
+			"dpipeline_dir_path": {
+				"type": "string"
+			}
+		},
+		"annotations": []
+	}
+}
