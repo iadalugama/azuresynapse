@@ -17,6 +17,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "SalesLTCustomerCSV"
+				},
+				{
+					"dataset": {
+						"referenceName": "SynapseAnalyticsTblCustomer",
+						"type": "DatasetReference"
+					},
+					"name": "synapsePoolCustomerTable"
 				}
 			],
 			"sinks": [
@@ -37,6 +44,9 @@
 				},
 				{
 					"name": "drvColumnHaskKey"
+				},
+				{
+					"name": "exists1"
 				}
 			],
 			"scriptLines": [
@@ -84,6 +94,11 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> SalesLTCustomerCSV",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table',",
+				"     staged: true) ~> synapsePoolCustomerTable",
 				"SalesLTCustomerCSV, AzureSQLTableCustomers join(Column_4 == FirstName,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
@@ -109,7 +124,10 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectColumns",
 				"selectColumns derive(fistname_hashkey = sha2(256, FirstName)) ~> drvColumnHaskKey",
-				"drvColumnHaskKey sink(allowSchemaDrift: true,",
+				"drvColumnHaskKey, synapsePoolCustomerTable exists(fistname_hashkey == ERROR_FUNCTION(''),",
+				"     negate:true,",
+				"     broadcast: 'auto')~> exists1",
+				"exists1 sink(allowSchemaDrift: true,",
 				"     validateSchema: true,",
 				"     deletable:false,",
 				"     insertable:true,",
