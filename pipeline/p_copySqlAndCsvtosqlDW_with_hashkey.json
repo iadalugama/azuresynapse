@@ -1,5 +1,5 @@
 {
-	"name": "p_copysqltosqldw_with_hashkey",
+	"name": "p_copySqlAndCsvtosqlDW_with_hashkey",
 	"properties": {
 		"activities": [
 			{
@@ -29,6 +29,13 @@
 								}
 							}
 						}
+					},
+					"staging": {
+						"linkedService": {
+							"referenceName": "adlsgen2_testadls2synapsew01",
+							"type": "LinkedServiceReference"
+						},
+						"folderPath": "staging-data"
 					},
 					"compute": {
 						"coreCount": 8,

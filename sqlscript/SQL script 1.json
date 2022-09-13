@@ -2,7 +2,7 @@
 	"name": "SQL script 1",
 	"properties": {
 		"content": {
-			"query": "SELECT *\n FROM [dbo].[customers]",
+			"query": "SELECT *\n FROM [dbo].[customers]\n\n --TRUNCATE table  [dbo].[customers]",
 			"metadata": {
 				"language": "sql"
 			},
