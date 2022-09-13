@@ -51,7 +51,8 @@
 		],
 		"parameters": {
 			"dpipeline_dir_path": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "2022/04/07"
 			}
 		},
 		"annotations": []
