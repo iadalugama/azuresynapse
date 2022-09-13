@@ -1,5 +1,5 @@
 {
-	"name": "AzureSynapseAnalyticsTable1",
+	"name": "SynapseAnalyticsTblCustomer",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "SynapseDediactedPool_sampledw01",
