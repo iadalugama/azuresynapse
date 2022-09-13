@@ -2,7 +2,7 @@
 	"name": "SalesLTCustomer",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "test-synapse-ws-01-WorkspaceDefaultStorage",
+			"referenceName": "adlsgen2_testadls2synapsew01",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {

@@ -31,6 +31,12 @@
 			"transformations": [
 				{
 					"name": "joinSQLandCSV"
+				},
+				{
+					"name": "selectColumns"
+				},
+				{
+					"name": "drvColumnHaskKey"
 				}
 			],
 			"scriptLines": [
@@ -83,7 +89,27 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'left')~> joinSQLandCSV",
-				"joinSQLandCSV sink(allowSchemaDrift: true,",
+				"joinSQLandCSV select(mapColumn(",
+				"          CustomerID,",
+				"          NameStyle,",
+				"          Title,",
+				"          FirstName,",
+				"          MiddleName,",
+				"          LastName,",
+				"          Suffix,",
+				"          CompanyName,",
+				"          SalesPerson,",
+				"          EmailAddress,",
+				"          Phone,",
+				"          PasswordHash,",
+				"          PasswordSalt,",
+				"          rowguid,",
+				"          ModifiedDate",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectColumns",
+				"selectColumns derive(fistname_hashkey = sha2(256, FirstName)) ~> drvColumnHaskKey",
+				"drvColumnHaskKey sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
 				"     insertable:true,",
