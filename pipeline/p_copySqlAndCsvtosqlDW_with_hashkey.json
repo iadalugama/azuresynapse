@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "df_copysqltosqldw",
+						"referenceName": "df_copysqlAndCSVtosqlDw",
 						"type": "DataFlowReference",
 						"parameters": {
 							"df_inside_dir_path": "\"/2022/04/07\""
