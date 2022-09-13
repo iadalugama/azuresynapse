@@ -2,7 +2,7 @@
 	"name": "AzureSynapseAnalyticsTable1",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureSynapseAnalyticsDW",
+			"referenceName": "SynapseDediactedPool_sampledw01",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
