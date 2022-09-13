@@ -2,7 +2,7 @@
 	"name": "SQL script 1",
 	"properties": {
 		"content": {
-			"query": "SELECT CustomerID, fistname_hashkey\n FROM [dbo].[customers]\n\n --TRUNCATE table  [dbo].[customers]\n\n --alter TABLE dbo.customers drop  COLUMN  firstname_hashkey",
+			"query": "SELECT count(*) --,  fistname_hashkey\n FROM [dbo].[customers] --GROUP by fistname_hashkey\n\n --TRUNCATE table  [dbo].[customers]\n\n --alter TABLE dbo.customers drop  COLUMN  firstname_hashkey\n\n\n\n--3826",
 			"metadata": {
 				"language": "sql"
 			},

@@ -46,7 +46,7 @@
 					"name": "drvColumnHaskKey"
 				},
 				{
-					"name": "exists1"
+					"name": "existsCheckSinkandCurrentStream"
 				}
 			],
 			"scriptLines": [
@@ -127,8 +127,8 @@
 				"selectColumns derive(fistname_hashkey = sha2(256, FirstName)) ~> drvColumnHaskKey",
 				"drvColumnHaskKey, synapsePoolCustomerTable exists(fistname_hashkey == fistname_hashkey,",
 				"     negate:true,",
-				"     broadcast: 'auto')~> exists1",
-				"exists1 sink(allowSchemaDrift: true,",
+				"     broadcast: 'auto')~> existsCheckSinkandCurrentStream",
+				"existsCheckSinkandCurrentStream sink(allowSchemaDrift: true,",
 				"     validateSchema: true,",
 				"     deletable:false,",
 				"     insertable:true,",
