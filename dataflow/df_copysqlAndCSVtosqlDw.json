@@ -143,7 +143,7 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectColumns",
 				"selectColumns derive(fistname_hashkey = sha2(256, FirstName)) ~> drvColumnHaskKey",
-				"drvColumnHaskKey, synapsePoolCustomerTable exists(drvColumnHaskKey@fistname_hashkey == ERROR_FUNCTION(''),",
+				"drvColumnHaskKey, synapsePoolCustomerTable exists(drvColumnHaskKey@fistname_hashkey == synapsePoolCustomerTable@fistname_hashkey,",
 				"     negate:true,",
 				"     broadcast: 'auto')~> existsCheckSinkandCurrentStream",
 				"existsCheckSinkandCurrentStream sink(allowSchemaDrift: true,",
