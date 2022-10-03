@@ -17,7 +17,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "aa9da75c-1c7e-474f-af1c-6eddff3f9730"
+				"spark.autotune.trackingId": "2f1015f0-ae86-4eba-b9e8-a035882fbcc9"
 			}
 		},
 		"metadata": {
@@ -51,6 +51,9 @@
 			{
 				"cell_type": "code",
 				"source": [
+					"# https://bennyaustin.com/2020/10/07/pyspark-common-transforms/\r\n",
+					"\r\n",
+					"\r\n",
 					"import pyspark.sql.functions as F\r\n",
 					"from datetime import datetime\r\n",
 					"data = [\r\n",
