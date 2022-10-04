@@ -20,7 +20,7 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "65456dc0-8a24-4e59-9c15-2cf9096f60cc"
+				"spark.autotune.trackingId": "7f366afa-b57b-47e3-b018-6f9a435c83c0"
 			}
 		},
 		"metadata": {
@@ -54,9 +54,9 @@
 			{
 				"cell_type": "code",
 				"source": [
-					"%run DateConverstionUtils/ConvertUtil"
+					"%run ConvertUtil"
 				],
-				"execution_count": 5
+				"execution_count": 9
 			},
 			{
 				"cell_type": "code",
@@ -108,9 +108,9 @@
 					"\r\n",
 					"output = ct.julian_to_calendar(\"julian_date\")\r\n",
 					"display(output)\r\n",
-					"#df.show(truncate=False)"
+					""
 				],
-				"execution_count": 33
+				"execution_count": null
 			}
 		]
 	}
