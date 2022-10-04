@@ -20,12 +20,12 @@
 				"spark.dynamicAllocation.enabled": "false",
 				"spark.dynamicAllocation.minExecutors": "2",
 				"spark.dynamicAllocation.maxExecutors": "2",
-				"spark.autotune.trackingId": "08a75195-eb22-4fc0-a16a-7adbd105dae3"
+				"spark.autotune.trackingId": "274ffbe4-7643-410b-92d7-454424ee3447"
 			}
 		},
 		"metadata": {
 			"saveOutput": true,
-			"enableDebugMode": false,
+			"enableDebugMode": true,
 			"kernelspec": {
 				"name": "synapse_pyspark",
 				"display_name": "Synapse PySpark"
@@ -56,7 +56,7 @@
 				"source": [
 					"%run \"DateConverstionUtils/ConvertUtil\""
 				],
-				"execution_count": 11
+				"execution_count": 12
 			},
 			{
 				"cell_type": "code",
@@ -86,7 +86,7 @@
 					"df = sqlContext.createDataFrame(data, ['name', 'birthdaytime', 'grad_Score'])\r\n",
 					"df.show(truncate=False)"
 				],
-				"execution_count": null
+				"execution_count": 13
 			},
 			{
 				"cell_type": "code",
@@ -103,14 +103,14 @@
 					"collapsed": false
 				},
 				"source": [
-					"df = df.withColumn('julian_date', lit(75001))\r\n",
+					"df = df.withColumn('julian_date', lit(75011))\r\n",
 					"ct=CommonTransforms(df)\r\n",
 					"\r\n",
 					"output = ct.julian_to_calendar(\"julian_date\")\r\n",
 					"display(output)\r\n",
 					""
 				],
-				"execution_count": null
+				"execution_count": 15
 			}
 		]
 	}
